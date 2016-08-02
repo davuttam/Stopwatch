@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Time Counter</title>
+</head>
+<body>
+<h1>This is time counter</h1>
+ <div style="display: inline-block; ">
+ <button id="startBtn" type="button" onclick="starting()" class="btn btn-primary">Start</button>
+ <button id="pauseBtn" type="button" onclick="pausing()" class="btn btn-primary">Pause</button>
+<button id="resetbtn" type="button" onclick="reseting()" class="btn btn-primary">Reset</button>
+</div> 
+<br>
+<center>
+<p style="font-size: 39px;color:red;"> <label >MM</label>:<label>SS</label> </p>
+	<p style="font-size: 50px;"> <label id="minutes">00</label>:<label id="seconds">00</label> </p>
+</center>
+
+<script type="text/javascript">
+
+var interval,minutesVal,secondVal,seconds,temp=0;
+var strtbtn =document.getElementById("startBtn");
+var pausBtn=document.getElementById("pauseBtn");
+var restBtn=document.getElementById("resetbtn");
+
+pausBtn.disabled=true;
+restBtn.disabled=true;
+
+function starting(){
+
+pausBtn.disabled=false;
+restBtn.disabled=false;  
+ minutesVal=document.getElementById('minutes');
+ secondVal=document.getElementById('seconds');
+ if(temp)
+ 	seconds=temp;
+ else
+ 	seconds=0;
+
+ strtbtn.disabled=true;
+ interval =setInterval(myTimer,1000);
+
+
+	function myTimer(){
+		++seconds;
+		secondVal.innerHTML=check_Maintainance(seconds%60);
+		if(seconds%60==0){
+						minutesVal.innerHTML=check_Maintainance(seconds/60);
+						if(seconds/60==30){
+							reseting();
+						}
+					}
+	}
+
+	function check_Maintainance(value){
+		var strings1=""+value;
+		if(strings1.length<2 ){
+			return "0"+ strings1;
+		}
+		else{
+			return value;
+		}
+	}
+}
+
+function pausing(){
+	temp=seconds;
+	clearTimeout(interval);
+	strtbtn.disabled=false;
+	pausBtn.disabled=true;
+}
+
+
+function reseting(){
+	clearTimeout(interval);
+	minutesVal.innerHTML="00";
+	secondVal.innerHTML="00";
+	temp=0;
+	strtbtn.disabled=false;
+	pausBtn.disabled=true;
+	restBtn.disabled=true;
+}
+
+
+</script>
+
+
+</body>
+</html>
